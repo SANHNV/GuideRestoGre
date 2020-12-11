@@ -13,4 +13,11 @@
     <PackageReference Include="coverlet.collector" Version="1.2.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Data\GuideRestoGre.Data.csproj" />
+    <ProjectReference Include="..\GuideRestoGre.Data.Query\GuideRestoGre.Data.Query.csproj" />
+    <ProjectReference Include="..\GuideRestoGre.Services\GuideRestoGre.Services.csproj" />
+    <ProjectReference Include="..\TestsData\GuideRestoGre.TestsData.csproj" />
+  </ItemGroup>
+
 </Project>
