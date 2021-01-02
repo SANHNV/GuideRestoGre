@@ -51,14 +51,11 @@ namespace GuideRestoGre.Services.ImportExportData
         {
             restaurants = restaurantService.GetAll();
 
-            var json = JsonConvert.SerializeObject(restaurants);
-
-            using (var streamWriter = new StreamWriter(path))
+            // serialize JSON directly to a file
+            using (StreamWriter file = File.CreateText(@path))
             {
-                foreach(var line in json)
-                {
-                    streamWriter.WriteLine(line);
-                }
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Serialize(file, restaurants);
             }
         }
 
