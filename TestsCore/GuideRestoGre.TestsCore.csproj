@@ -21,8 +21,4 @@
     <ProjectReference Include="..\TestsData\GuideRestoGre.TestsData.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Ressources\" />
-  </ItemGroup>
-
 </Project>

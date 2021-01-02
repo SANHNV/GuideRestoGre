@@ -14,7 +14,7 @@ namespace GuideRestoGre.TestsCore
     /// Test for <see cref="Services.ImportExportData"/>
     /// </summary>
     [TestClass]
-    public class TestImportExportData
+    public class ImportExportDataServiceTest
     {
         /// <summary>
         /// fake list of Restaurant

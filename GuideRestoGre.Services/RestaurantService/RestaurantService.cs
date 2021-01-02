@@ -51,6 +51,9 @@ namespace GuideRestoGre.Services.RestaurantService
             using (var db = new RestaurantDbContext())
             {
                 db.Restaurants.Attach(restaurant);
+                
+                //TODO
+
                 db.SaveChanges();
             }
         }
@@ -64,6 +67,9 @@ namespace GuideRestoGre.Services.RestaurantService
             using (var db = new RestaurantDbContext())
             {
                 db.Restaurants.Remove(restaurant);
+
+                //TODO
+
                 db.SaveChanges();
             }
         }
