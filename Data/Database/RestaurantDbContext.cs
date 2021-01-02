@@ -24,7 +24,6 @@ namespace GuideRestoGre.Data.Database
         /// <param name="optionsBuilder"></param>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            // c'est une mauvaise pratique que nous corrigerons ultérieurement
             optionsBuilder.UseSqlServer(
                 @"server=MSI\SQLEXPRESS;database=RestauDb2020;trusted_connection=true;");
         }

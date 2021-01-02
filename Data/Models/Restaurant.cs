@@ -36,12 +36,12 @@ namespace GuideRestoGre.Data.Models
         public string Mail { get; set; }
 
         /// <summary>
-        /// Address
+        /// Address of <see cref="Restaurant"/>
         /// </summary>
         public Address Address { get; set; }
 
         /// <summary>
-        /// Grade
+        /// Grade of <see cref="Restaurant"/>
         /// </summary>
         public Grade Grade { get; set; }
     }

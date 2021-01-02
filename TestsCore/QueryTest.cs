@@ -7,9 +7,15 @@ using System.Linq;
 
 namespace GuideRestoGre.TestsCore
 {
+    /// <summary>
+    /// Test for the Query
+    /// </summary>
     [TestClass]
     public class QueryTest
     {
+        /// <summary>
+        /// Test local List of 5 Restaurants
+        /// </summary>
         private readonly IQueryable<Restaurant> restaurantsExist = new List<Restaurant>()
         {
             new Restaurant(){ 
@@ -121,17 +127,82 @@ namespace GuideRestoGre.TestsCore
                         LastVisit = new DateTime(2020, 10, 10, 8, 30, 52),
                         Score = 7
                     }
+            },
+            new Restaurant(){
+                ID = new Guid("00000000-0000-0000-0000-000000000007"),
+                Address = new Address()
+                    {   ID =  new Guid("00000000-0000-0000-0000-000000000057"),
+                        Street = "12 Rue Last",
+                        City = "Grenoble",
+                        ZipCode = "38100"
+                    },
+                Description = "Last Restaurant of last test",
+                Mail = "lastrestaurant@grenoble.fr",
+                PhoneNumber = 0600000006,
+                Name = "LastRestaurat",
+                Grade = new Grade()
+                    {   ID = new Guid("00000000-0000-0000-0000-000000000107") ,
+                        Comment = "Last Restaurant...",
+                        LastVisit = new DateTime(2020, 12, 12, 8, 30, 52),
+                        Score = 2
+                    }
             }
         }.AsQueryable<Restaurant>();
 
+        /// <summary>
+        /// Test <see cref="Query.FilterByScore(IQueryable{Restaurant}, int)"/> with a given list of <see cref="Restaurant"/>
+        /// <para>Assert only on result was return when looking for a score of 5</para>        
+        /// <para>Assert the score of the result is 5</para>
+        /// </summary>
         [TestMethod]
-        public void FilterByScore_ExistingListRestau_Test()
+        public void FilterByScore_BaseOnExistingListRestaurant_Return1()
         {
+            //Arrange
+
             //Act
             var result = restaurantsExist.FilterByScore(5);
 
             //Assert
             Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(5, result.First().Grade.Score);
+        }
+
+        /// <summary>
+        /// Test <see cref="Query.FilterBestScore(IQueryable{Restaurant})"/> with a given list of <see cref="Restaurant"/>
+        /// <para>Assert the score of the first Restaurant in the list return is 9</para>        
+        /// <para>Assert the first element of the original list and the return list aren't the same</para>
+        /// </summary>
+        [TestMethod]
+        public void FilterByBestScore_BaseOnExistingListRestau_Test()
+        {
+            //Arrange
+
+            //Act
+            var result = restaurantsExist.FilterBestScore();
+
+            //Assert
+            Assert.AreEqual(9, result.First().Grade.Score);
+            Assert.AreNotEqual(restaurantsExist.First(), result.First());
+        }
+
+        /// <summary>
+        /// Test <see cref="Query.Best5Score(IQueryable{Restaurant})"/> with a given list of <see cref="Restaurant"/>
+        /// <para>Assert only five restaurants are returned in the result list</para>
+        /// <para>Assert the score of the first Restaurant in the list return is 9</para>        
+        /// <para>Assert the first element of the original list and the return list aren't the same</para>
+        /// </summary>
+        [TestMethod]
+        public void FilterByBest5Score_BaseOnExistingListRestau_Test()
+        {
+            //Arrange
+
+            //Act
+            var result = restaurantsExist.Best5Score();
+
+            //Assert
+            Assert.AreEqual(5, result.Count());
+            Assert.AreEqual(9, result.First().Grade.Score);
+            Assert.AreNotEqual(restaurantsExist.First(), result.First());
         }
     }
 }

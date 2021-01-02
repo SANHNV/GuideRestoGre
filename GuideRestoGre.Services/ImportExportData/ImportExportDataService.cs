@@ -1,9 +1,8 @@
 ﻿using GuideRestoGre.Data.Models;
+using GuideRestoGre.Services.RestaurantService;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace GuideRestoGre.Services.ImportExportData
 {
@@ -14,12 +13,15 @@ namespace GuideRestoGre.Services.ImportExportData
     {
         private List<Restaurant> restaurants { get; set; }
 
+        private readonly IRestaurantService restaurantService;
+
         /// <summary>
         /// Constructor
         /// </summary>
-        public ImportExportDataService() {
+        public ImportExportDataService(IRestaurantService restaurantService) {
 
             restaurants = new List<Restaurant>();
+            this.restaurantService = restaurantService;
         }
 
         #region public Methods
@@ -30,8 +32,6 @@ namespace GuideRestoGre.Services.ImportExportData
         /// <param name="path"></param>
         public void ImportData(string path)
         {
-            //TODO
-
             using (var sr = new StreamReader(path))
             {
                 restaurants = JsonConvert.DeserializeObject<List<Restaurant>>(sr.ReadToEnd());
@@ -39,7 +39,7 @@ namespace GuideRestoGre.Services.ImportExportData
 
             foreach (var restaurant in restaurants)
             {
-                //Insert in database
+                restaurantService.Create(restaurant);
             }
         }
 
@@ -49,9 +49,7 @@ namespace GuideRestoGre.Services.ImportExportData
         /// <param name="path"></param>
         public void ExportData(string path)
         {
-            //TODO
-
-            //get database
+            restaurants = restaurantService.GetAll();
 
             var json = JsonConvert.SerializeObject(restaurants);
 
