@@ -25,7 +25,7 @@ namespace GuideRestoGre.Data.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"server=MSI\SQLEXPRESS;database=restauDb2020;trusted_connection=true;");
+                @"server=MSI\SQLEXPRESS;database=restauDb2021;trusted_connection=true;");
         }
     }
 }

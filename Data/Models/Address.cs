@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GuideRestoGre.Data.Models
 {
@@ -27,5 +28,7 @@ namespace GuideRestoGre.Data.Models
         /// </summary>
         public string City { get; set; }
 
+        [ForeignKey("Restaurant")]
+        public virtual Guid RestaurantId { get; set; }
     }
 }
