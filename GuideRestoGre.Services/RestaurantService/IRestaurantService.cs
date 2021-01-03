@@ -31,5 +31,6 @@ namespace GuideRestoGre.Services.RestaurantService
         /// </summary>
         /// <param name="restaurant"></param>
         void Update(Restaurant restaurant);
+
     }
 }

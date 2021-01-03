@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GuideRestoGre.Data.Models
@@ -11,6 +12,7 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// Id 
         /// </summary>
+
         public Guid ID { get; set; }
 
         /// <summary>

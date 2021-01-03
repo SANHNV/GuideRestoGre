@@ -26,7 +26,13 @@ namespace GuideRestoGre.Services.RestaurantService
         {
             using (var db = new RestaurantDbContext())
             {
-                return db.Restaurants.ToList();
+                var restaurants = db.Restaurants.ToList();
+                foreach(var resto in restaurants)
+                {
+                    resto.Grade = db.Grades.FirstOrDefault(g => g.RestaurantId == resto.ID);
+                    resto.Address = db.Addresses.FirstOrDefault(a => a.RestaurantId == resto.ID);
+                }
+                return restaurants;
             }
         }
 
@@ -53,9 +59,9 @@ namespace GuideRestoGre.Services.RestaurantService
             {
                 if(db.Restaurants.Where(r => r.ID == restaurant.ID).Any() && restaurant != null)
                     db.Restaurants.Update(restaurant);
-                if(db.Grades.Where(g => g.RestaurantId == restaurant.ID).Any() && restaurant.Grade != null)
+                if (restaurant.Grade != null)
                     db.Grades.Update(restaurant.Grade);
-                if(db.Addresses.Where(a => a.RestaurantId == restaurant.ID).Any() && restaurant.Address != null)
+                if (restaurant.Address != null)
                     db.Addresses.Update(restaurant.Address);
 
                 db.SaveChanges();
@@ -73,27 +79,11 @@ namespace GuideRestoGre.Services.RestaurantService
                 if (db.Restaurants.Where(r => r.ID == restaurant.ID).Any())
                     db.Restaurants.Remove(restaurant);
                 if (db.Grades.Where(g => g.RestaurantId == restaurant.ID).Any())
-                    db.Grades.Remove(GetGradeById(restaurant.ID));
+                    db.Grades.Remove(restaurant.Grade);
                 if (db.Addresses.Where(a => a.RestaurantId == restaurant.ID).Any())
-                    db.Addresses.Remove(GetAddressById(restaurant.ID));
+                    db.Addresses.Remove(restaurant.Address);
 
                 db.SaveChanges();
-            }
-        }
-
-        private Grade GetGradeById(Guid id)
-        {
-            using (var db = new RestaurantDbContext())
-            {
-                return db.Grades.Where(x => x.RestaurantId == id).FirstOrDefault();
-            }
-        }
-
-        private Address GetAddressById(Guid id)
-        {
-            using (var db = new RestaurantDbContext())
-            {
-                return db.Addresses.Where(x => x.RestaurantId == id).FirstOrDefault();
             }
         }
     }

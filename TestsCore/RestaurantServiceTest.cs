@@ -101,7 +101,7 @@ namespace GuideRestoGre.TestsCore
         }
 
         [TestMethod]
-        public void E_Update_EditNameRestaurant_NameRestaurantChangeInDb()
+        public void Ea_Update_EditNameRestaurant_NameRestaurantChangeInDb()
         {
             //Arrange
             var restaurantService = new RestaurantService();

@@ -12,7 +12,6 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// ID of <see cref="Grade"/>
         /// </summary>
-        [Key]
         public Guid ID { get; set; }
 
         /// <summary>
