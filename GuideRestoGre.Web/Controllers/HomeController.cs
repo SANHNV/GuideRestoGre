@@ -1,11 +1,9 @@
-﻿using GuideRestoGre.Web.Models;
+﻿using GuideRestoGre.Services.RestaurantService;
+using GuideRestoGre.Web.Models;
+using GuideRestoGre.Web.ViewsModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace GuideRestoGre.Web.Controllers
 {
@@ -13,19 +11,20 @@ namespace GuideRestoGre.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IRestaurantService _restaurantService;
+
+        public HomeController(ILogger<HomeController> logger, IRestaurantService restaurantService )
         {
             _logger = logger;
+            _restaurantService = restaurantService;
         }
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
+            //TODO : get only the 5 best
+            var resto = _restaurantService.GetAll();
+            var restoVM = new RestaurantsViewModel() { restaurants = resto };
+            return View(restoVM);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

@@ -30,6 +30,9 @@ namespace GuideRestoGre.Data.Models
         [MaxLength(1)]
         public int Score { get; set; }
 
+        /// <summary>
+        /// RestaurantId FK
+        /// </summary>
         [ForeignKey("Restaurant")]
         public virtual Guid RestaurantId { get; set; }
 

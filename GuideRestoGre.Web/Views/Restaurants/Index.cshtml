@@ -1,0 +1,66 @@
+﻿@model GuideRestoGre.Web.ViewsModels.RestaurantsViewModel
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Liste des Restaurants</title>
+</head>
+<body>
+<p>
+    <a asp-action="Create">Créer un nouveau Restaurant</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               ID
+            </th>
+            <th>
+               Name
+            </th>
+            <th>
+               PhoneNumber
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+               Mail
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var resto in Model.restaurants) {
+        <tr>
+            <td>
+                @resto.ID
+            </td>
+            <td>
+                @resto.Name
+            </td>
+            <td>
+                @resto.PhoneNumber
+            </td>
+            <td>
+                @resto.Description
+            </td>
+            <td>
+                @resto.Mail
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id= resto.ID }) |
+                @Html.ActionLink("Details", "Details", new { id = resto.ID }) |
+                @Html.ActionLink("Delete", "Delete", new { id = resto.ID })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</body>
+</html>

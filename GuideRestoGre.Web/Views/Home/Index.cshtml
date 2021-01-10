@@ -1,8 +1,31 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model GuideRestoGre.Web.ViewsModels.RestaurantsViewModel
+@{
+    ViewData["Title"] = "Home GuideRestoGre";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Welcome to GuideRestoGro</h1>
+    <p><strong>THE</strong> guide des restaurants de Grenoble !</p>
+</div>
+<div class="text-center">
+    <h3 class="display-4">Top <strong>5</strong> des meilleurs restaurants de Grenoble</h3>
+    <p></p>
+    @if (Model.restaurants != null)
+    {
+        <div class="card-columns">
+        @foreach (var resto in Model.restaurants)
+        {
+            @*<partial name="Shared/_RestoDetail.cshtml" model="resto" />*@
+            @*@await Html.PartialAsync("Shared/_DetailRestaurant", resto)*@
+            <div class="card border-success mb-3">
+                <div class="card-header card-title bg-success text-white">@resto.Name</div>
+                <div class="card-body">
+                    <p class="card-text">@resto.Description</p>
+                    <a href="#" class="card-link">@resto.PhoneNumber</a>
+                    <a href="#" class="card-link">@resto.Mail</a>
+                </div>
+            </div>
+        }
+        </div>
+    }
 </div>
