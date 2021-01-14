@@ -1,6 +1,6 @@
 ﻿using GuideRestoGre.Data.Database;
 using GuideRestoGre.Data.Models;
-using System;
+using GuideRestoGre.Data.Query;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -24,16 +24,61 @@ namespace GuideRestoGre.Services.RestaurantService
         /// <returns></returns>
         public List<Restaurant> GetAll()
         {
+            var restaurants = new List<Restaurant>();
             using (var db = new RestaurantDbContext())
             {
-                var restaurants = db.Restaurants.ToList();
+                restaurants = db.Restaurants.ToList();
                 foreach(var resto in restaurants)
                 {
                     resto.Grade = db.Grades.FirstOrDefault(g => g.RestaurantId == resto.ID);
                     resto.Address = db.Addresses.FirstOrDefault(a => a.RestaurantId == resto.ID);
                 }
-                return restaurants;
             }
+            return restaurants;
+        }
+
+        /// <summary>
+        /// <inheritdoc/> 
+        /// </summary>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        public List<Restaurant> GetByScore(int score)
+        {
+            var result = new List<Restaurant>();
+
+            using (var db = new RestaurantDbContext())
+            {                
+                var matchingGrades = db.Grades.FilterByScore(score).ToList();
+
+                foreach(var grade in matchingGrades)
+                {
+                    var resto = GetAll().FirstOrDefault(r=>r.ID == grade.RestaurantId);
+                    if(resto != default)
+                    {
+                        result.Add(resto);
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        /// <summary>
+        /// <inheritdoc/> 
+        /// </summary>
+        /// <returns></returns>
+        public List<Restaurant> GetByBestScore()
+        {
+            return GetAll().AsQueryable().FilterByBestScore().ToList();
+        }
+
+        /// <summary>
+        /// <inheritdoc/> 
+        /// </summary>
+        /// <returns></returns>
+        public List<Restaurant> Get5BestScore()
+        {
+            return GetAll().AsQueryable().Best5Score().ToList();
         }
 
         /// <summary>

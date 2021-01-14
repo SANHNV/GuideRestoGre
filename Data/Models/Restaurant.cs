@@ -38,11 +38,11 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// Address of <see cref="Restaurant"/>
         /// </summary>
-        public Address Address { get; set; }
+        public Address Address { get; set; } = new Address();
 
         /// <summary>
         /// Grade of <see cref="Restaurant"/>
         /// </summary>
-        public Grade Grade { get; set; }
+        public Grade Grade { get; set; } = new Grade();
     }
 }

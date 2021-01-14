@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Data\GuideRestoGre.Data.csproj" />
+    <ProjectReference Include="..\GuideRestoGre.Data.Query\GuideRestoGre.Data.Query.csproj" />
   </ItemGroup>
 
 </Project>

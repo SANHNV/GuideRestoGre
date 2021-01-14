@@ -11,14 +11,14 @@ namespace GuideRestoGre.Data.Query
     public static class Query
     {
         /// <summary>
-        /// Filter a List of <see cref="Restaurant"/> with the given score
+        /// Filter a List of <see cref="Grade"/> with the given score
         /// </summary>
-        /// <param name="restaurants"></param>
+        /// <param name="grades"></param>
         /// <param name="score"></param>
-        /// <returns>List of <see cref="Restaurant"/></returns>
-        public static IQueryable<Restaurant> FilterByScore(this IQueryable<Restaurant> restaurants, int score)
+        /// <returns>List of <see cref="Grade"/></returns>
+        public static IQueryable<Grade> FilterByScore(this IQueryable<Grade> grades, int score)
         {
-            return restaurants.Where(e => e.Grade.Score == score);
+            return grades.Where(e => e.Score == score);
         }
 
         /// <summary>
@@ -26,9 +26,9 @@ namespace GuideRestoGre.Data.Query
         /// </summary>
         /// <param name="restaurants"></param>
         /// <returns>List of <see cref="Restaurant"/></returns>
-        public static IQueryable<Restaurant> FilterBestScore(this IQueryable<Restaurant> restaurants)
+        public static IQueryable<Restaurant> FilterByBestScore(this IQueryable<Restaurant> restaurants)
         {
-            return restaurants.OrderByDescending(e=>e.Grade.Score);
+            return restaurants.OrderByDescending(e => e.Grade.Score);
         }
 
         /// <summary>

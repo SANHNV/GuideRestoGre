@@ -150,7 +150,7 @@ namespace GuideRestoGre.TestsCore
         }.AsQueryable<Restaurant>();
 
         /// <summary>
-        /// Test <see cref="Query.FilterByScore(IQueryable{Restaurant}, int)"/> with a given list of <see cref="Restaurant"/>
+        /// Test <see cref="Query.FilterByScore(IQueryable{Restaurant}, int)"/> with a given list of <see cref="Grade"/>
         /// <para>Assert only on result was return when looking for a score of 5</para>        
         /// <para>Assert the score of the result is 5</para>
         /// </summary>
@@ -158,17 +158,22 @@ namespace GuideRestoGre.TestsCore
         public void FilterByScore_BaseOnExistingListRestaurant_Return1()
         {
             //Arrange
+            var grades = new List<Grade>();
+            foreach(var resto in restaurantsExist)
+            {
+                grades.Add(resto.Grade);
+            }
 
             //Act
-            var result = restaurantsExist.FilterByScore(5);
+            var result = grades.AsQueryable().FilterByScore(5);
 
             //Assert
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual(5, result.First().Grade.Score);
+            Assert.AreEqual(5, result.First().Score);
         }
 
         /// <summary>
-        /// Test <see cref="Query.FilterBestScore(IQueryable{Restaurant})"/> with a given list of <see cref="Restaurant"/>
+        /// Test <see cref="Query.FilterByBestScore(IQueryable{Restaurant})"/> with a given list of <see cref="Restaurant"/>
         /// <para>Assert the score of the first Restaurant in the list return is 9</para>        
         /// <para>Assert the first element of the original list and the return list aren't the same</para>
         /// </summary>
@@ -178,7 +183,7 @@ namespace GuideRestoGre.TestsCore
             //Arrange
 
             //Act
-            var result = restaurantsExist.FilterBestScore();
+            var result = restaurantsExist.FilterByBestScore();
 
             //Assert
             Assert.AreEqual(9, result.First().Grade.Score);

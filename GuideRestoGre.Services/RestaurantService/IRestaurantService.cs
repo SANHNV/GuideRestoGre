@@ -27,6 +27,25 @@ namespace GuideRestoGre.Services.RestaurantService
         List<Restaurant> GetAll();
 
         /// <summary>
+        /// Return all the <see cref="Restaurant"/> matching the given score in the databse
+        /// </summary>
+        /// <param name="score"></param>
+        /// <returns></returns>
+        List<Restaurant> GetByScore(int score);
+
+        /// <summary>
+        /// Return all the <see cref="Restaurant"/> order by score descending
+        /// </summary>
+        /// <returns></returns>
+        List<Restaurant> GetByBestScore();
+
+        /// <summary>
+        /// Return 5 <see cref="Restaurant"/> with the best score
+        /// </summary>
+        /// <returns></returns>
+        List<Restaurant> Get5BestScore();
+
+        /// <summary>
         /// Update a <see cref="Restaurant"/> in the database
         /// </summary>
         /// <param name="restaurant"></param>
