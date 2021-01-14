@@ -188,6 +188,7 @@ namespace GuideRestoGre.TestsCore
         /// Test <see cref="RestaurantService.Update(Restaurant)"/>
         /// Assert the name, score and street were update in the database
         /// </summary>
+        /// <remarks>Add test to update restaurant no existing in db to complete coverage test</remarks>
         [TestMethod]
         public void E_Update_EditNameRestaurant_NameRestaurantChangeInDb()
         {
