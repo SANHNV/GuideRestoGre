@@ -21,8 +21,7 @@ namespace GuideRestoGre.Web.Controllers
 
         public IActionResult Index()
         {
-            //TODO : get only the 5 best
-            var resto = _restaurantService.GetAll();
+            var resto = _restaurantService.Get5BestScore();
             var restoVM = new RestaurantsViewModel() { restaurants = resto };
             return View(restoVM);
         }
