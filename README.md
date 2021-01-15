@@ -6,15 +6,15 @@
 -	[x] Unit Test on the two 
 - [ ] Views : 
 
-| Views 	| Status  | Description 	|
-| :----:	| :--:    | ----------	|
-| Home 	  |   [x]   | welcome Message + 5 best restaurant	|
-| ListRestaurant 	|  [ ] 	| name, Address, datevisite, score	|
-| EditRestaurant 	|	 [ ]  | edit one restaurant 	|
-| CreateRestaurant 	|	 [ ]  | create new restaurant 	|
-| DeleteRestaurant 	|	 [ ]  | delete Existing Restaurant 	|
-| ListRestaurant 	|	 [ ]  |  name, Address, datevisite, score 	|
-| CreateNote 	    |	 [ ]  | create note for restaurant 	|
+| Views 	                | Status  | Description 	|
+| :----:	                | :--:    | ----------	|
+| Home 	                  |   [x]   | welcome Message + 5 best restaurant	|
+| ListRestaurant 	        |  [x] 	| name, Address, datevisite, score	|
+| EditRestaurant 	        |	 [ ]  | edit one restaurant 	|
+| CreateRestaurant 	      |	 [x]  | create new restaurant 	|
+| DeleteRestaurant 	      |	 [ ]  | delete Existing Restaurant 	|
+| ListRestaurantByScore 	|	 [ ]  |  name, Address, datevisite, score 	|
+| CreateNote 	            |	 [ ]  | create note for restaurant 	|
 
 ## Data model:
 ### Restaurant:
