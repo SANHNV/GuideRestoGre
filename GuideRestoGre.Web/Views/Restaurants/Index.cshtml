@@ -18,19 +18,16 @@
     <thead>
         <tr>
             <th>
-               ID
-            </th>
-            <th>
                Name
             </th>
             <th>
-               PhoneNumber
+               Address
             </th>
             <th>
-                Description
+                Dernière Visite
             </th>
             <th>
-               Mail
+               Note
             </th>
             <th></th>
         </tr>
@@ -39,19 +36,17 @@
 @foreach (var resto in Model.restaurants) {
         <tr>
             <td>
-                @resto.ID
-            </td>
-            <td>
                 @resto.Name
             </td>
             <td>
-                @resto.PhoneNumber
+                @resto.Address.Street
+                @resto.Address.ZipCode @resto.Address.City
             </td>
             <td>
-                @resto.Description
+                @resto.Grade.LastVisit
             </td>
             <td>
-                @resto.Mail
+                @resto.Grade.Score
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id= resto.ID }) |

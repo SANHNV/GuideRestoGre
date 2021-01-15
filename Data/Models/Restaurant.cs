@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace GuideRestoGre.Data.Models
 {
@@ -21,8 +20,6 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// Phone number of the <see cref="Restaurant"/>
         /// </summary>
-        [MaxLength(10)]
-
         public int PhoneNumber { get; set; }
 
         /// <summary>

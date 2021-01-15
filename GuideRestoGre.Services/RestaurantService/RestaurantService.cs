@@ -1,6 +1,7 @@
 ﻿using GuideRestoGre.Data.Database;
 using GuideRestoGre.Data.Models;
 using GuideRestoGre.Data.Query;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,12 +28,7 @@ namespace GuideRestoGre.Services.RestaurantService
             var restaurants = new List<Restaurant>();
             using (var db = new RestaurantDbContext())
             {
-                restaurants = db.Restaurants.ToList();
-                foreach(var resto in restaurants)
-                {
-                    resto.Grade = db.Grades.FirstOrDefault(g => g.RestaurantId == resto.ID);
-                    resto.Address = db.Addresses.FirstOrDefault(a => a.RestaurantId == resto.ID);
-                }
+                restaurants = db.Restaurants.Include(r=>r.Address).Include(r => r.Grade).ToList();
             }
             return restaurants;
         }

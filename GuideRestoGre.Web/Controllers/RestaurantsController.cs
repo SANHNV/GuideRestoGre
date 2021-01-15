@@ -1,7 +1,9 @@
-﻿using GuideRestoGre.Services.RestaurantService;
+﻿using GuideRestoGre.Data.Models;
+using GuideRestoGre.Services.RestaurantService;
 using GuideRestoGre.Web.ViewsModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace GuideRestoGre.Web.Controllers
 {
@@ -21,9 +23,17 @@ namespace GuideRestoGre.Web.Controllers
             return View(restoVM);
         }
 
-        // GET: RestaurantsController/Details/5
-        public ActionResult Details(int id)
+        // GET: RestaurantsController
+        public ActionResult IndexOrder()
         {
+            var restoVM = new RestaurantsViewModel() { restaurants = _restaurantService.GetByBestScore() };
+            return View(restoVM);
+        }
+
+        // GET: RestaurantsController/Details/5
+        public ActionResult Details(Guid id)
+        {
+            //var resto = new RestaurantsViewModel() { restaurants = _restaurantService.GetById(id) };
             return View();
         }
 
@@ -36,10 +46,15 @@ namespace GuideRestoGre.Web.Controllers
         // POST: RestaurantsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create([Bind("Name,PhoneNumber,Description,Mail")] Restaurant restaurant, string AddressStreet, string AddressZipCode, string AddressCity)
         {
             try
             {
+                restaurant.Address.City = AddressCity;
+                restaurant.Address.ZipCode = AddressZipCode;
+                restaurant.Address.Street = AddressStreet;
+                _restaurantService.Create(restaurant);
+
                 return RedirectToAction(nameof(Index));
             }
             catch
