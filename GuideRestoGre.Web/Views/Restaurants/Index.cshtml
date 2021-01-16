@@ -11,15 +11,16 @@
         <title>Liste des Restaurants</title>
     </head>
     <body>
-        <p>
-            <a asp-action="Create">Créer un nouveau Restaurant</a>
-        </p>
+        <div>
+            <h3>Liste des Restaurants</h3>
+            <hr />
+        </div>
+        <div class="card-columns text-center">
 
-        @foreach (var resto in Model.restaurants)
-        {
-            <div class="card-columns">
-                <partial name="Details" model="resto"/>
-            </div>
-         }
+            @foreach (var resto in Model.restaurants)
+            {
+                <partial name="_Details" model="resto" view-data="ViewData"/>
+             }
+        </div>
     </body>
 </html>

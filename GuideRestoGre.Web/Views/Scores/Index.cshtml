@@ -10,12 +10,18 @@
     <title>Liste des Restaurants By Score</title>
 </head>
 <body>
-
-    @foreach (var resto in Model.restaurants)
-    {
-        <div class="card-columns">
-            <partial name="Details" model="resto" />
-        </div>
-    }
+    <div>
+        <h3>Liste des Restaurants By Score</h3>
+        <hr />
+    </div>
+    <div class="card-columns text-center">
+        @foreach (var resto in Model.restaurants)
+        {
+            @if (resto.Grade.Comment != null)
+            {
+                <partial name="_Details" model="resto" view-data="ViewData" />
+            }
+        }
+    </div>
 </body>
 </html>

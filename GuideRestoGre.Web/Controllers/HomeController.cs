@@ -21,6 +21,7 @@ namespace GuideRestoGre.Web.Controllers
 
         public IActionResult Index()
         {
+            ViewData["ShowButtons"] = false;
             var resto = _restaurantService.Get5BestScore();
             var restoVM = new RestaurantsViewModel() { restaurants = resto };
             return View(restoVM);

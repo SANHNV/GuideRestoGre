@@ -21,25 +21,8 @@ namespace GuideRestoGre.Web.Controllers
         // GET: RestaurantsController/
         public ActionResult Index()
         {
+            ViewData["ShowButtons"] = true;
             return View(new RestaurantsViewModel() { restaurants = _restaurantService.GetAll() });
-        }
-
-        // GET: RestaurantsController/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var restaurant = _restaurantService.GetById(id);
-
-            if (restaurant == null)
-            {
-                return NotFound();
-            }
-
-            return View(_restaurantService.GetById(id));
         }
 
         // GET: RestaurantsController/Create
@@ -115,6 +98,8 @@ namespace GuideRestoGre.Web.Controllers
             {
                 return NotFound();
             }
+
+            ViewData["ShowButtons"] = false;
 
             return View(restaurant);
         }

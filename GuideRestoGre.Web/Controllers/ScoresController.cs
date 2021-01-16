@@ -19,25 +19,7 @@ namespace GuideRestoGre.Web.Controllers
         // GET: ScoresController
         public ActionResult Index()
         {
-            return View(new RestaurantsViewModel() { restaurants = _restaurantService.GetAll() });
-        }
-
-        // GET: ScoresController/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var restaurant = _restaurantService.GetById(id);
-
-            if (restaurant == null)
-            {
-                return NotFound();
-            }
-
-            return View(_restaurantService.GetById(id));
+            return View(new RestaurantsViewModel() { restaurants = _restaurantService.GetByBestScore() });
         }
 
         // GET: ScoresController/Edit/5
