@@ -18,25 +18,28 @@ namespace GuideRestoGre.Web.Controllers
             _restaurantService = restaurantService;
         }
 
-        // GET: RestaurantsController
+        // GET: RestaurantsController/
         public ActionResult Index()
         {
-            var restoVM = new RestaurantsViewModel() { restaurants = _restaurantService.GetAll() };
-            return View(restoVM);
-        }
-
-        // GET: RestaurantsController
-        public ActionResult IndexOrder()
-        {
-            var restoVM = new RestaurantsViewModel() { restaurants = _restaurantService.GetByBestScore() };
-            return View(restoVM);
+            return View(new RestaurantsViewModel() { restaurants = _restaurantService.GetAll() });
         }
 
         // GET: RestaurantsController/Details/5
-        public ActionResult Details(Guid id)
+        public ActionResult Details(Guid? id)
         {
-            //var resto = new RestaurantsViewModel() { restaurants = _restaurantService.GetById(id) };
-            return View();
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var restaurant = _restaurantService.GetById(id);
+
+            if (restaurant == null)
+            {
+                return NotFound();
+            }
+
+            return View(_restaurantService.GetById(id));
         }
 
         // GET: RestaurantsController/Create
@@ -78,9 +81,6 @@ namespace GuideRestoGre.Web.Controllers
                 return NotFound();
             }
 
-            ViewData["AddressCity"] = restaurant.Address.City;
-            ViewData["AddressZipCode"] = restaurant.Address.ZipCode;
-            ViewData["AddressStreet"] = restaurant.Address.Street;
             return View(restaurant);
         }
 
@@ -95,9 +95,8 @@ namespace GuideRestoGre.Web.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-            catch(Exception e)
+            catch
             {
-                Debug.Write("OYE OYE : " + e);
                 return View(restaurant);
             }
         }

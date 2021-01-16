@@ -6,56 +6,20 @@
 <!DOCTYPE html>
 
 <html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Liste des Restaurants</title>
-</head>
-<body>
-<p>
-    <a asp-action="Create">Créer un nouveau Restaurant</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-               Name
-            </th>
-            <th>
-               Address
-            </th>
-            <th>
-                Dernière Visite
-            </th>
-            <th>
-               Note
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var resto in Model.restaurants) {
-        <tr>
-            <td>
-                @resto.Name
-            </td>
-            <td>
-                @resto.Address.Street
-                @resto.Address.ZipCode @resto.Address.City
-            </td>
-            <td>
-                @resto.Grade.LastVisit
-            </td>
-            <td>
-                @resto.Grade.Score
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id= resto.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = resto.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = resto.ID })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
-</body>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Liste des Restaurants</title>
+    </head>
+    <body>
+        <p>
+            <a asp-action="Create">Créer un nouveau Restaurant</a>
+        </p>
+
+        @foreach (var resto in Model.restaurants)
+        {
+            <div class="card-columns">
+                <partial name="Details" model="resto"/>
+            </div>
+         }
+    </body>
 </html>
