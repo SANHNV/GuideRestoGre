@@ -10,9 +10,9 @@
 | :----:	                | :--:    | ----------	|
 | Home 	                  |   [x]   | welcome Message + 5 best restaurant	|
 | ListRestaurant 	        |  [x] 	| name, Address, datevisite, score	|
-| EditRestaurant 	        |	 [ ]  | edit one restaurant 	|
+| EditRestaurant 	        |	 [x]  | edit one restaurant 	|
 | CreateRestaurant 	      |	 [x]  | create new restaurant 	|
-| DeleteRestaurant 	      |	 [ ]  | delete Existing Restaurant 	|
+| DeleteRestaurant 	      |	 [x]  | delete Existing Restaurant 	|
 | ListRestaurantByScore 	|	 [ ]  |  name, Address, datevisite, score 	|
 | CreateNote 	            |	 [ ]  | create note for restaurant 	|
 
