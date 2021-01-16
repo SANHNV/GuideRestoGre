@@ -4,7 +4,7 @@
 -	[x] Serialisation and Deserialisation of the data
 -	[x] Service Restaurant (CRUD)
 -	[x] Unit Test on the two 
-- [ ] Views : 
+- [x] Views : 
 
 | Views 	                | Status  | Description 	|
 | :----:	                | :--:    | ----------	|
@@ -13,8 +13,8 @@
 | EditRestaurant 	        |	 [x]  | edit one restaurant 	|
 | CreateRestaurant 	      |	 [x]  | create new restaurant 	|
 | DeleteRestaurant 	      |	 [x]  | delete Existing Restaurant 	|
-| ListRestaurantByScore 	|	 [ ]  |  name, Address, datevisite, score 	|
-| CreateNote 	            |	 [ ]  | create note for restaurant 	|
+| ListRestaurantByScore 	|	 [x]  |  name, Address, datevisite, score 	|
+| CreateNote 	            |	 [x]  | create note for restaurant 	|
 
 ## Data model:
 ### Restaurant:
