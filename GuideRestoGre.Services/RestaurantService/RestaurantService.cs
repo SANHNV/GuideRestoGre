@@ -113,15 +113,6 @@ namespace GuideRestoGre.Services.RestaurantService
             {
                 using (var db = new RestaurantDbContext())
                 {
-                    if (restaurant.Grade.ID == null)
-                    {
-                        restaurant.Grade.ID = db.Grades.FirstOrDefault(g => g.RestaurantId == restaurant.ID).ID;
-                    }
-
-                    if (restaurant.Address.ID == null)
-                    {
-                        restaurant.Address.ID = db.Addresses.FirstOrDefault(a => a.RestaurantId == restaurant.ID).ID;
-                    }
                     db.Restaurants.Update(restaurant);
 
                     await db.SaveChangesAsync();

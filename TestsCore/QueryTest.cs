@@ -204,5 +204,21 @@ namespace GuideRestoGre.TestsCore
             Assert.AreEqual(9, result.First().Grade.Score);
             Assert.AreNotEqual(restaurantsExist.First(), result.First());
         }
+
+        /// <summary>
+        /// Test <see cref="Query.FilterById(IQueryable{Restaurant}, Guid?)"/>
+        /// Assert the <see cref="Restaurant"/> return is the same as the one giving the id
+        /// </summary>
+        [TestMethod]
+        public void FilterById_BaseOnExistingRestau_ReturnRestauCorresponding()
+        {
+            //Arrange
+
+            //Act
+            var result = restaurantsExist.FilterById(restaurantsExist.First().ID);
+
+            //Assert
+            Assert.AreEqual(restaurantsExist.First(), result);
+        }
     }
 }
