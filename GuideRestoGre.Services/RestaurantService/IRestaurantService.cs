@@ -1,5 +1,7 @@
 ﻿using GuideRestoGre.Data.Models;
+using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GuideRestoGre.Services.RestaurantService
 {
@@ -15,16 +17,23 @@ namespace GuideRestoGre.Services.RestaurantService
         void Create(Restaurant restaurant);
 
         /// <summary>
-        /// Delete a <see cref="Restaurant"/> in the database
+        /// Delete a <see cref="Restaurant"/> in the database thanks to it id
         /// </summary>
-        /// <param name="restaurant"></param>
-        void Delete(Restaurant restaurant);
+        /// <param name="id"></param>
+        Task Delete(Guid id);
 
         /// <summary>
         /// Return all the <see cref="Restaurant"/> in the database
         /// </summary>
         /// <returns></returns>
         List<Restaurant> GetAll();
+
+        /// <summary>
+        /// Get a <see cref="Restaurant"/> by id or return default
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Restaurant GetById(Guid? id);
 
         /// <summary>
         /// Return all the <see cref="Restaurant"/> matching the given score in the databse
@@ -49,7 +58,6 @@ namespace GuideRestoGre.Services.RestaurantService
         /// Update a <see cref="Restaurant"/> in the database
         /// </summary>
         /// <param name="restaurant"></param>
-        void Update(Restaurant restaurant);
-
+        Task Update(Restaurant restaurant);
     }
 }

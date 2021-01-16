@@ -7,6 +7,7 @@ using Moq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GuideRestoGre.TestsCore
 {
@@ -21,13 +22,13 @@ namespace GuideRestoGre.TestsCore
         /// <summary>
         /// Delete all the <see cref="restaurantsToDelete"/> from the databse
         /// </summary>
-        private void deleteTestResto()
+        private async Task deleteTestResto()
         {
             var restaurantService = new RestaurantService();
 
             foreach (var resto in restaurantsToDelete)
             {
-                restaurantService.Delete(resto);
+                await restaurantService.Delete(resto.ID);
             }
         }
 
@@ -52,7 +53,7 @@ namespace GuideRestoGre.TestsCore
         /// Assert a <see cref="Restaurant"/> was added to the database
         /// </summary>
         [TestMethod]
-        public void C_Create_ANewRestaurant_NewRestaurantInDb()
+        public async Task C_Create_ANewRestaurant_NewRestaurantInDb()
         {
             //Arrange
             var resto = new Restaurant();
@@ -68,7 +69,7 @@ namespace GuideRestoGre.TestsCore
             Assert.AreNotEqual(count, restaurantService.GetAll().Count());
 
             //Clean up database
-            deleteTestResto();
+            await deleteTestResto();
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace GuideRestoGre.TestsCore
         /// Assert the total restaurants count isn't equal after a new restaurant was created
         /// </summary>
         [TestMethod]
-        public void Da_GetAll_AddARestaurant_NotNull()
+        public async Task Da_GetAll_AddARestaurant_NotNull()
         {
             //Arrange
             var restaurantService = new RestaurantService();
@@ -92,7 +93,7 @@ namespace GuideRestoGre.TestsCore
             Assert.AreNotEqual(countBefore, result);
 
             //Clean up database
-            deleteTestResto();
+            await deleteTestResto();
         }
 
         /// <summary>
@@ -100,7 +101,7 @@ namespace GuideRestoGre.TestsCore
         /// Assert 1 <see cref="Restaurant"/> was return with a score of 5
         /// </summary>
         [TestMethod]
-        public void Db_GetByScore_TakeAScore_1RestaurantScore5()
+        public async Task Db_GetByScore_TakeAScore_1RestaurantScore5()
         {
             //Arrange
             var restaurantService = new RestaurantService();
@@ -119,7 +120,7 @@ namespace GuideRestoGre.TestsCore
             Assert.AreEqual(5, result.First().Grade.Score);
 
             //Clean up database
-            deleteTestResto();
+            await deleteTestResto();
         }
 
         /// <summary>
@@ -127,7 +128,7 @@ namespace GuideRestoGre.TestsCore
         /// Assert the first element return has a score of 9 and is different from the first element of the original list
         /// </summary>
         [TestMethod]
-        public void Dc_GetByBestScore_ListRestaurantBefore_ReturnListBestScoredRestaurant()
+        public async Task Dc_GetByBestScore_ListRestaurantBefore_ReturnListBestScoredRestaurant()
         {
             //Arrange
             var restaurantService = new RestaurantService();
@@ -147,7 +148,7 @@ namespace GuideRestoGre.TestsCore
             Assert.AreNotEqual(restosBefore.First().Grade.Score, result.First().Grade.Score);
 
             //Clean up database
-            deleteTestResto();
+            await deleteTestResto();
         }
 
         /// <summary>
@@ -156,7 +157,7 @@ namespace GuideRestoGre.TestsCore
         /// and the first element of the original list isn't equal to the first element of the order list
         /// </summary>
         [TestMethod]
-        public void Dd_Get5BestScore_ListRestaurantBefore_ReturnList5BestScoredRestaurant()
+        public async Task Dd_Get5BestScore_ListRestaurantBefore_ReturnList5BestScoredRestaurant()
         {
             //Arrange
             var restaurantService = new RestaurantService();
@@ -180,7 +181,7 @@ namespace GuideRestoGre.TestsCore
             Assert.AreNotEqual(restosBefore.First(), result.First());
 
             //Clean up database
-            deleteTestResto();
+            await deleteTestResto();
         }
 
 
@@ -190,7 +191,7 @@ namespace GuideRestoGre.TestsCore
         /// </summary>
         /// <remarks>Add test to update restaurant no existing in db to complete coverage test</remarks>
         [TestMethod]
-        public void E_Update_EditNameRestaurant_NameRestaurantChangeInDb()
+        public async Task E_Update_EditNameRestaurant_NameRestaurantChangeInDb()
         {
             //Arrange
             var restaurantService = new RestaurantService();
@@ -203,7 +204,7 @@ namespace GuideRestoGre.TestsCore
             restaurant.Address.Street = "test";
 
             //Act
-            restaurantService.Update(restaurant);
+            await restaurantService.Update(restaurant);
             var updateResto = restaurantService.GetAll().Where(e => e.ID == restaurant.ID).FirstOrDefault();
 
             //Assert
@@ -212,7 +213,7 @@ namespace GuideRestoGre.TestsCore
             Assert.AreEqual(restaurant.Address.Street, updateResto.Address.Street);
 
             //Clean up database
-            deleteTestResto();
+            await deleteTestResto();
         }
 
         /// <summary>
@@ -220,7 +221,7 @@ namespace GuideRestoGre.TestsCore
         /// Assert the total count of <see cref="Restaurant"/> is different
         /// </summary>
         [TestMethod]
-        public void F_Delete_TakeFirstRestaurant_OneLessRestaurantInDb()
+        public async Task F_Delete_TakeFirstRestaurant_OneLessRestaurantInDb()
         {
             //Arrange
             var restaurantService = new RestaurantService();
@@ -229,14 +230,28 @@ namespace GuideRestoGre.TestsCore
             var count = restaurantService.GetAll().Count();
 
             //Act
-            restaurantService.Delete(restaurantsToDelete.First());
+            await restaurantService.Delete(restaurantsToDelete.First().ID);
 
             //Assert
             Assert.AreNotEqual(count, restaurantService.GetAll().Count());
+        }
+
+        [TestMethod]
+        public async Task G_GetByID_TakeFirstRestaurant_ReturnSameRestaurant()
+        {
+            //Arrange
+            var restaurantService = new RestaurantService();
+            restaurantsToDelete.Add(new Restaurant() { ID = Guid.NewGuid() });
+            restaurantService.Create(restaurantsToDelete.First());
+
+            //Act
+            var result = restaurantService.GetById(restaurantsToDelete.First().ID);
+
+            //Assert
+            Assert.AreEqual(restaurantsToDelete.First().ID, result.ID);
 
             //Clean up database
-            deleteTestResto();
-
+            await deleteTestResto();
         }
     }
 }

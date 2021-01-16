@@ -2,8 +2,10 @@
 using GuideRestoGre.Data.Models;
 using GuideRestoGre.Data.Query;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace GuideRestoGre.Services.RestaurantService
 {
@@ -19,18 +21,32 @@ namespace GuideRestoGre.Services.RestaurantService
         {
         }
 
+        #region GET
+
         /// <summary>
         /// <inheritdoc/> 
         /// </summary>
         /// <returns></returns>
         public List<Restaurant> GetAll()
         {
-            var restaurants = new List<Restaurant>();
             using (var db = new RestaurantDbContext())
             {
-                restaurants = db.Restaurants.Include(r=>r.Address).Include(r => r.Grade).ToList();
+                return db.Restaurants.GetAll().ToList();
             }
-            return restaurants;
+        }
+
+        /// <summary>
+        /// <inheritdoc/> 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Restaurant GetById(Guid? id)
+        {
+            using(var db = new RestaurantDbContext())
+            {
+                var result = db.Restaurants.GetAll().FirstOrDefault(r => r.ID == id);
+                return result;
+            }
         }
 
         /// <summary>
@@ -40,23 +56,10 @@ namespace GuideRestoGre.Services.RestaurantService
         /// <returns></returns>
         public List<Restaurant> GetByScore(int score)
         {
-            var result = new List<Restaurant>();
-
             using (var db = new RestaurantDbContext())
-            {                
-                var matchingGrades = db.Grades.FilterByScore(score).ToList();
-
-                foreach(var grade in matchingGrades)
-                {
-                    var resto = GetAll().FirstOrDefault(r=>r.ID == grade.RestaurantId);
-                    if(resto != default)
-                    {
-                        result.Add(resto);
-                    }
-                }
+            {
+                return db.Restaurants.GetAll().FilterByScore(score).ToList();
             }
-
-            return result;
         }
 
         /// <summary>
@@ -65,7 +68,10 @@ namespace GuideRestoGre.Services.RestaurantService
         /// <returns></returns>
         public List<Restaurant> GetByBestScore()
         {
-            return GetAll().AsQueryable().FilterByBestScore().ToList();
+            using (var db = new RestaurantDbContext())
+            {
+                return db.Restaurants.GetAll().FilterByBestScore().ToList();
+            }
         }
 
         /// <summary>
@@ -74,8 +80,15 @@ namespace GuideRestoGre.Services.RestaurantService
         /// <returns></returns>
         public List<Restaurant> Get5BestScore()
         {
-            return GetAll().AsQueryable().Best5Score().ToList();
+            using (var db = new RestaurantDbContext())
+            {
+                return db.Restaurants.GetAll().Best5Score().ToList();
+            }
         }
+
+        #endregion
+
+        #region CUD
 
         /// <summary>
         /// <inheritdoc/>
@@ -94,18 +107,25 @@ namespace GuideRestoGre.Services.RestaurantService
         /// <inheritdoc/>
         /// </summary>
         /// <param name="restaurant"></param>
-        public void Update(Restaurant restaurant)
+        public async Task Update(Restaurant restaurant)
         {
-            using (var db = new RestaurantDbContext())
+            if (RestaurantExists(restaurant.ID))
             {
-                if(db.Restaurants.Where(r => r.ID == restaurant.ID).Any() && restaurant != null)
-                    db.Restaurants.Update(restaurant);
-                if (restaurant.Grade != null)
-                    db.Grades.Update(restaurant.Grade);
-                if (restaurant.Address != null)
-                    db.Addresses.Update(restaurant.Address);
+                using (var db = new RestaurantDbContext())
+                {
+                    if (restaurant.Grade.ID == null)
+                    {
+                        restaurant.Grade.ID = db.Grades.FirstOrDefault(g => g.RestaurantId == restaurant.ID).ID;
+                    }
 
-                db.SaveChanges();
+                    if (restaurant.Address.ID == null)
+                    {
+                        restaurant.Address.ID = db.Addresses.FirstOrDefault(a => a.RestaurantId == restaurant.ID).ID;
+                    }
+                    db.Restaurants.Update(restaurant);
+
+                    await db.SaveChangesAsync();
+                }
             }
         }
 
@@ -113,18 +133,30 @@ namespace GuideRestoGre.Services.RestaurantService
         /// <inheritdoc/>
         /// </summary>
         /// <param name="restaurant"></param>
-        public void Delete(Restaurant restaurant)
+        public async Task Delete(Guid id)
         {
             using (var db = new RestaurantDbContext())
             {
-                if (db.Restaurants.Where(r => r.ID == restaurant.ID).Any())
+                var restaurant = GetById(id);
+                if (restaurant.ID != null)
                     db.Restaurants.Remove(restaurant);
-                if (db.Grades.Where(g => g.RestaurantId == restaurant.ID).Any())
-                    db.Grades.Remove(restaurant.Grade);
-                if (db.Addresses.Where(a => a.RestaurantId == restaurant.ID).Any())
-                    db.Addresses.Remove(restaurant.Address);
 
                 db.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Return true if the <see cref="Restaurant.ID"/> exists
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        private bool RestaurantExists(Guid id)
+        {
+            using (var db = new RestaurantDbContext())
+            {
+                return db.Restaurants.Any(e => e.ID == id);
             }
         }
     }

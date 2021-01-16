@@ -158,18 +158,13 @@ namespace GuideRestoGre.TestsCore
         public void FilterByScore_BaseOnExistingListRestaurant_Return1()
         {
             //Arrange
-            var grades = new List<Grade>();
-            foreach(var resto in restaurantsExist)
-            {
-                grades.Add(resto.Grade);
-            }
 
             //Act
-            var result = grades.AsQueryable().FilterByScore(5);
+            var result = restaurantsExist.FilterByScore(5);
 
             //Assert
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual(5, result.First().Score);
+            Assert.AreEqual(5, result.First().Grade.Score);
         }
 
         /// <summary>
