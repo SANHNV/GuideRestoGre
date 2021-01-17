@@ -18,6 +18,9 @@ namespace GuideRestoGre.Data.Database
 
         #endregion
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public RestaurantDbContext()
         {
             Database.EnsureCreated();
@@ -30,7 +33,7 @@ namespace GuideRestoGre.Data.Database
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(
-                @"server=MSI\SQLEXPRESS;database=restauDb2021_3;trusted_connection=true;");
+                @"server=MSI\SQLEXPRESS;database=restauDb2021;trusted_connection=true;");
         }
     }
 }
