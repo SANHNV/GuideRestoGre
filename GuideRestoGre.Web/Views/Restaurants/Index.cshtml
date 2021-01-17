@@ -1,0 +1,26 @@
+﻿@model GuideRestoGre.Web.ViewsModels.RestaurantsViewModel
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Liste des Restaurants</title>
+    </head>
+    <body>
+        <div>
+            <h3>Liste des Restaurants</h3>
+            <hr />
+        </div>
+        <div class="card-columns text-center">
+
+            @foreach (var resto in Model.restaurants)
+            {
+                <partial name="_Details" model="resto" view-data="ViewData"/>
+             }
+        </div>
+    </body>
+</html>

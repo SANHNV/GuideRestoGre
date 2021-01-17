@@ -1,39 +1,42 @@
-﻿using GuideRestoGre.Data.Models;
-using GuideRestoGre.Data.Query;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using GuideRestoGre.Services.ImportExportData;
+using GuideRestoGre.Services.RestaurantService;
+using Moq;
+using GuideRestoGre.Data.Models;
 using System.Collections.Generic;
+using System;
 using System.Linq;
+using System.IO;
 
 namespace GuideRestoGre.TestsCore
 {
     /// <summary>
-    /// Test for the Query
+    /// Test for <see cref="Services.ImportExportData"/>
     /// </summary>
     [TestClass]
-    public class QueryTest
+    public class ImportExportDataServiceTest
     {
         /// <summary>
-        /// Test local List of 5 Restaurants
+        /// fake list of Restaurant
         /// </summary>
-        private readonly IQueryable<Restaurant> restaurantsExist = new List<Restaurant>()
+        private static readonly List<Restaurant> restaurantsDb = new List<Restaurant>()
         {
-            new Restaurant(){ 
-                ID = new Guid("00000000-0000-0000-0000-000000000001"), 
+            new Restaurant(){
+                ID = new Guid("00000000-0000-0000-0000-000000000001"),
                 Address = new Address()
-                    {   ID =  new Guid("00000000-0000-0000-0000-000000000050"), 
-                        Street = "12 Rue Ampère", 
-                        City = "Grenoble", 
+                    {   ID =  new Guid("00000000-0000-0000-0000-000000000050"),
+                        Street = "12 Rue Ampère",
+                        City = "Grenoble",
                         ZipCode = "38100"
-                    }, 
+                    },
                 Description = "Très bon restaurant de sushi",
                 Mail = "wasabi@grenoble.fr",
                 PhoneNumber = 0600000006,
                 Name = "Wasabi",
-                Grade = new Grade() 
-                    {   ID = new Guid("00000000-0000-0000-0000-000000000100") , 
-                        Comment = "Très déçu qu'ils ne fassent pas de tartiflettes...", 
-                        LastVisit = new DateTime(2020, 12, 12, 8, 30, 52), 
+                Grade = new Grade()
+                    {   ID = new Guid("00000000-0000-0000-0000-000000000100") ,
+                        Comment = "Très déçu qu'ils ne fassent pas de tartiflettes...",
+                        LastVisit = new DateTime(2020, 12, 12, 8, 30, 52),
                         Score = 2
                     }
             },
@@ -147,78 +150,81 @@ namespace GuideRestoGre.TestsCore
                         Score = 2
                     }
             }
-        }.AsQueryable<Restaurant>();
+        };
 
         /// <summary>
-        /// Test <see cref="Query.FilterByScore(IQueryable{Restaurant}, int)"/> with a given list of <see cref="Grade"/>
-        /// <para>Assert only on result was return when looking for a score of 5</para>        
-        /// <para>Assert the score of the result is 5</para>
+        /// Pile path for json import/export
+        /// </summary>
+        private const string filePath = @".\restaurants.json";
+
+        /// <summary>
+        /// Test the constructor of <see cref="ImportExportDataService"/> given a restaurantService
+        /// Assert the object is not null
         /// </summary>
         [TestMethod]
-        public void FilterByScore_BaseOnExistingListRestaurant_Return1()
+        public void Constructor_TakeARestaurantService_NotNull()
         {
             //Arrange
+            var restaurantService = new RestaurantService();
 
             //Act
-            var result = restaurantsExist.FilterByScore(5);
+            var importExportData = new ImportExportDataService(restaurantService);
 
             //Assert
-            Assert.AreEqual(1, result.Count());
-            Assert.AreEqual(5, result.First().Grade.Score);
+            Assert.IsNotNull(importExportData);
         }
 
         /// <summary>
-        /// Test <see cref="Query.FilterByBestScore(IQueryable{Restaurant})"/> with a given list of <see cref="Restaurant"/>
-        /// <para>Assert the score of the first Restaurant in the list return is 9</para>        
-        /// <para>Assert the first element of the original list and the return list aren't the same</para>
+        /// Test <see cref="ImportExportDataService.ImportData(string)"/> taking a string path to a json repertoring 7 restaurants
+        /// <para>Assert <see cref="Restaurant"/> were extract in the list, so it's not null
+        /// and there are 7 <see cref="Restaurant"/> on the list</para>
         /// </summary>
         [TestMethod]
-        public void FilterByBestScore_BaseOnExistingListRestau_Test()
+        public void ImportData_TakeARestaurantService_DatabaseIsPopulated()
         {
             //Arrange
+            var result = new List<Restaurant>();
+
+            var mockRestaurantService = new Mock<IRestaurantService>();
+            mockRestaurantService
+                .Setup(x => x.Create(It.IsAny<Restaurant>()))
+                .Callback((Restaurant restaurant)=> result.Add(restaurant));
+
+            var importExportData = new ImportExportDataService(mockRestaurantService.Object);
 
             //Act
-            var result = restaurantsExist.FilterByBestScore();
+            importExportData.ImportData(filePath);
 
             //Assert
-            Assert.AreEqual(9, result.First().Grade.Score);
-            Assert.AreNotEqual(restaurantsExist.First(), result.First());
+            Assert.IsNotNull(result);
+            Assert.AreEqual(7, result.Count());
         }
 
         /// <summary>
-        /// Test <see cref="Query.Best5Score(IQueryable{Restaurant})"/> with a given list of <see cref="Restaurant"/>
-        /// <para>Assert only five restaurants are returned in the result list</para>
-        /// <para>Assert the score of the first Restaurant in the list return is 9</para>        
-        /// <para>Assert the first element of the original list and the return list aren't the same</para>
+        /// Test <see cref="ImportExportDataService.ExportData(string)"/> with a file path and a given list of <see cref="Restaurant"/>
+        /// <para>Assert the json was created and is not empty</para>
         /// </summary>
         [TestMethod]
-        public void FilterByBest5Score_BaseOnExistingListRestau_Test()
+        public void ExportData_TakeARestaurantService_JsonCreatedAndNotEmpty()
         {
             //Arrange
+            string resultFromJson;
+
+            var mockRestaurantService = new Mock<IRestaurantService>();
+            mockRestaurantService.Setup(x => x.GetAll()).Returns(restaurantsDb);
+
+            var importExportData = new ImportExportDataService(mockRestaurantService.Object);
 
             //Act
-            var result = restaurantsExist.Best5Score();
+            importExportData.ExportData(filePath);
+
+            using (var streamReader = new StreamReader(filePath))
+            {
+                resultFromJson = streamReader.ReadToEnd();
+            }
 
             //Assert
-            Assert.AreEqual(5, result.Count());
-            Assert.AreEqual(9, result.First().Grade.Score);
-            Assert.AreNotEqual(restaurantsExist.First(), result.First());
-        }
-
-        /// <summary>
-        /// Test <see cref="Query.FilterById(IQueryable{Restaurant}, Guid?)"/>
-        /// Assert the <see cref="Restaurant"/> return is the same as the one giving the id
-        /// </summary>
-        [TestMethod]
-        public void FilterById_BaseOnExistingRestau_ReturnRestauCorresponding()
-        {
-            //Arrange
-
-            //Act
-            var result = restaurantsExist.FilterById(restaurantsExist.First().ID);
-
-            //Assert
-            Assert.AreEqual(restaurantsExist.First(), result);
+            Assert.IsNotNull(resultFromJson);
         }
     }
 }

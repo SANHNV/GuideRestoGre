@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace GuideRestoGre.Data.Models
 {
@@ -21,8 +20,6 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// Phone number of the <see cref="Restaurant"/>
         /// </summary>
-        [MaxLength(10)]
-
         public int PhoneNumber { get; set; }
 
         /// <summary>
@@ -36,13 +33,13 @@ namespace GuideRestoGre.Data.Models
         public string Mail { get; set; }
 
         /// <summary>
-        /// Address
+        /// Address of <see cref="Restaurant"/>
         /// </summary>
-        public Address Address { get; set; }
+        public Address Address { get; set; } = new Address();
 
         /// <summary>
-        /// Grade
+        /// Grade of <see cref="Restaurant"/>
         /// </summary>
-        public Grade Grade { get; set; }
+        public Grade Grade { get; set; } = new Grade();
     }
 }

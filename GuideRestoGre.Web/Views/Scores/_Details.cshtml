@@ -1,0 +1,16 @@
+﻿@model GuideRestoGre.Data.Models.Restaurant
+
+<div>
+    <div class="card border-success mb-3">
+        <div class="card-header card-title bg-success text-white">@Model.Name</div>
+        <div class="card-body">
+            <p class="card-subtitle">Note</p>
+            <p class="card-text">Last Visit : @Model.Grade.LastVisit</p>
+            <p class="card-text">Commentaire : @Model.Grade.Comment</p>
+            <p class="card-text">Score : @Model.Grade.Score</p>
+        </div>
+        <div class="card-footer">
+            <a asp-action="Edit" asp-controller="Scores" asp-route-id="@Model.ID" class="btn btn-primary">New Score</a>
+        </div>
+    </div>
+</div>

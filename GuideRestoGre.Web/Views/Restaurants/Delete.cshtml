@@ -1,0 +1,19 @@
+﻿@model GuideRestoGre.Data.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Delete</h1>
+
+<h3>Are you sure you want to delete @Model.Name ?</h3>
+<div>
+    <partial name="_Details" model="Model" view-data="ViewData"/>
+
+    <form asp-action="DeleteConfirmed">
+        <input type="hidden" asp-for="ID" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-primary">Cancel</a>
+    </form>
+</div>

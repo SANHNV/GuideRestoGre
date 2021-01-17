@@ -1,0 +1,36 @@
+﻿@model GuideRestoGre.Data.Models.Restaurant
+
+<div>
+    <div class="card border-success mb-3">
+        <div class="card-header card-title bg-success text-white">@Model.Name</div>
+        <div class="card-body">
+            <p class="card-text">
+                @Model.Description
+                <br />
+            <p>tel : <a href="https://www.grand-dictionnaire-latin.com/" class="card-link">@Model.PhoneNumber</a></p>
+            <p>mail : <a href="https://www.grand-dictionnaire-latin.com/" class="card-link">@Model.Mail</a></p>
+            <hr />
+            <p class="card-subtitle"><strong>Adresse</strong></p>
+            <p class="card-text">
+                @Model.Address.Street
+                <br />@Model.Address.City  @Model.Address.ZipCode
+            </p>
+            @if (Model.Grade.Comment != null)
+            {
+                <hr />
+                <p class="card-text">
+                    <strong>Note</strong> : @Model.Grade.Score &#11088;
+                    <br />@Model.Grade.Comment
+                </p>
+            }
+        </div>
+        @if ((bool)ViewData["ShowButtons"])
+        {
+            <div class="card-footer">
+                <a asp-action="Edit" asp-controller="Restaurants" asp-route-id="@Model.ID" class="btn btn-primary">Edit Restau</a>
+                <a asp-action="Delete" asp-controller="Restaurants" asp-route-id="@Model.ID" class="btn btn-danger">Delete</a>
+                <a asp-action="Edit" asp-controller="Scores" asp-route-id="@Model.ID" class="btn btn-success">New Score</a>
+            </div>
+        }
+    </div>
+</div>

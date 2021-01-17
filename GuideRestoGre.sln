@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30621.155
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuideRestoGre.TestsCore", "TestsCore\GuideRestoGre.TestsCore.csproj", "{F6C5AB67-04F7-440F-8286-CF897B40B661}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuideRestoGre.TestsData", "TestsData\GuideRestoGre.TestsData.csproj", "{EA1411D2-C7BE-4763-A39D-012AB9A68310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuideRestoGre.Tests", "TestsCore\GuideRestoGre.Tests.csproj", "{F6C5AB67-04F7-440F-8286-CF897B40B661}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuideRestoGre.Data", "Data\GuideRestoGre.Data.csproj", "{04C21EE5-80E8-426E-9C56-A0D1502A6749}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuideRestoGre.Data.Query", "GuideRestoGre.Data.Query\GuideRestoGre.Data.Query.csproj", "{D33060F3-1EDF-4A5C-9D89-18D80BBDF5DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuideRestoGre.Data.Query", "GuideRestoGre.Data.Query\GuideRestoGre.Data.Query.csproj", "{D33060F3-1EDF-4A5C-9D89-18D80BBDF5DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuideRestoGre.Services", "GuideRestoGre.Services\GuideRestoGre.Services.csproj", "{4F5110D3-B404-4BC3-AE0F-23F928BBDF9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GuideRestoGre.Services", "GuideRestoGre.Services\GuideRestoGre.Services.csproj", "{4F5110D3-B404-4BC3-AE0F-23F928BBDF9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GuideRestoGre.Web", "GuideRestoGre.Web\GuideRestoGre.Web.csproj", "{39CCCB37-EFC5-490D-86A5-80BE1F760701}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,6 @@ Global
 		{F6C5AB67-04F7-440F-8286-CF897B40B661}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6C5AB67-04F7-440F-8286-CF897B40B661}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6C5AB67-04F7-440F-8286-CF897B40B661}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EA1411D2-C7BE-4763-A39D-012AB9A68310}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EA1411D2-C7BE-4763-A39D-012AB9A68310}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EA1411D2-C7BE-4763-A39D-012AB9A68310}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EA1411D2-C7BE-4763-A39D-012AB9A68310}.Release|Any CPU.Build.0 = Release|Any CPU
 		{04C21EE5-80E8-426E-9C56-A0D1502A6749}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{04C21EE5-80E8-426E-9C56-A0D1502A6749}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04C21EE5-80E8-426E-9C56-A0D1502A6749}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +35,10 @@ Global
 		{4F5110D3-B404-4BC3-AE0F-23F928BBDF9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F5110D3-B404-4BC3-AE0F-23F928BBDF9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F5110D3-B404-4BC3-AE0F-23F928BBDF9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{39CCCB37-EFC5-490D-86A5-80BE1F760701}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{39CCCB37-EFC5-490D-86A5-80BE1F760701}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{39CCCB37-EFC5-490D-86A5-80BE1F760701}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{39CCCB37-EFC5-490D-86A5-80BE1F760701}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,0 +1,31 @@
+﻿@model GuideRestoGre.Web.ViewsModels.RestaurantsViewModel
+@{
+    ViewData["Title"] = "Home GuideRestoGre";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome to GuideRestoGre</h1>
+    <hr />
+    <p class="text-center">
+        &#127860; &#127867; &#127789; &#127790; &#127828; &#127829; &#127832; &#127831; &#127830; &#127832; &#127833; &#127834; &#127835; &#127836; &#127837; &#127838; &#127839; &#127840; &#127841; &#127842; &#127843; &#127844; &#127845; &#127846; &#127847; &#127848; &#127849; &#127851; &#127852; &#127853; &#127854; &#127855; &#127856; &#127857; &#127858; &#127859; &#127860; &#127867;
+    </p>
+    <h5><strong>THE</strong> guide des restaurants de Grenoble !</h5>
+    <p class="text-center">
+        &#127860; &#127867; &#127789; &#127790; &#127828; &#127829; &#127832; &#127831; &#127830; &#127832; &#127833; &#127834; &#127835; &#127836; &#127837; &#127838; &#127839; &#127840; &#127841; &#127842; &#127843; &#127844; &#127845; &#127846; &#127847; &#127848; &#127849; &#127851; &#127852; &#127853; &#127854; &#127855; &#127856; &#127857; &#127858; &#127859; &#127860; &#127867;
+    </p>
+    <hr />
+</div>
+
+<div class="text-center">
+    <h5>Top <strong>5</strong> des meilleurs restaurants de Grenoble</h5>
+    <hr />
+    @if (Model.restaurants != null)
+    {
+        <div class="card-columns">
+        @foreach (var resto in Model.restaurants)
+        {
+            <partial name="~/Views/Restaurants/_Details.cshtml" model="resto" />
+        }
+        </div>
+    }
+</div>

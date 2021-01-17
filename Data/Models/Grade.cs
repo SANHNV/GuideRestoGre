@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace GuideRestoGre.Data.Models
@@ -12,7 +11,6 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// ID of <see cref="Grade"/>
         /// </summary>
-        [Key]
         public Guid ID { get; set; }
 
         /// <summary>
@@ -28,9 +26,11 @@ namespace GuideRestoGre.Data.Models
         /// <summary>
         /// Score attributed
         /// </summary>
-        [MaxLength(1)]
         public int Score { get; set; }
 
+        /// <summary>
+        /// RestaurantId FK
+        /// </summary>
         [ForeignKey("Restaurant")]
         public virtual Guid RestaurantId { get; set; }
 

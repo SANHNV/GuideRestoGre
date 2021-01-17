@@ -1,0 +1,53 @@
+﻿@model GuideRestoGre.Data.Models.Restaurant
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>New Score</h1>
+
+<h4>@Model.Name</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Grade.ID" />
+            <input type="hidden" asp-for="Name" />
+            <input type="hidden" asp-for="PhoneNumber" />
+            <input type="hidden" asp-for="Description" />
+            <input type="hidden" asp-for="Mail" />
+            <input type="hidden" asp-for="Address.ID" />
+            <input type="hidden" asp-for="Address.Street" />
+            <input type="hidden" asp-for="Address.City" />
+            <input type="hidden" asp-for="Address.ZipCode" />
+            <input type="hidden" asp-for="Address.RestaurantId" />
+            <input type="hidden" asp-for="Grade.RestaurantId" />
+            <input type="hidden" asp-for="ID" />
+            <div class="form-group">
+                <label asp-for="Grade.LastVisit" class="control-label"></label>
+                <input asp-for="Grade.LastVisit" type="date" autofocus min="2021-01-01" required value="@DateTime.Today.ToString("yyyy-MM-dd")" max="@DateTime.Today.ToString("yyyy-MM-dd")" class="form-control" />
+                <span asp-validation-for="Grade.LastVisit" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grade.Comment" class="control-label"></label>
+                <input asp-for="Grade.Comment" type="text" required placeholder="Never ever again..." class="form-control" />
+                <span asp-validation-for="Grade.Comment" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grade.Score" class="control-label"></label>
+                <input asp-for="Grade.Score" type="number" min="0" max="10" required placeholder="5" class="form-control" />
+                <span asp-validation-for="Grade.Score" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Cancel</a>
+</div>
+

@@ -1,0 +1,27 @@
+﻿@model GuideRestoGre.Web.ViewsModels.RestaurantsViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Liste des Restaurants By Score</title>
+</head>
+<body>
+    <div>
+        <h3>Liste des Restaurants By Score</h3>
+        <hr />
+    </div>
+    <div class="card-columns text-center">
+        @foreach (var resto in Model.restaurants)
+        {
+            @if (resto.Grade.Comment != null)
+            {
+                <partial name="_Details" model="resto" view-data="ViewData" />
+            }
+        }
+    </div>
+</body>
+</html>

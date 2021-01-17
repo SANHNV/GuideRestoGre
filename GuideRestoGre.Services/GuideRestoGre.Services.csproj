@@ -5,11 +5,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ImportExportData\Ressouce\data.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Data\GuideRestoGre.Data.csproj" />
+    <ProjectReference Include="..\GuideRestoGre.Data.Query\GuideRestoGre.Data.Query.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="ImportExportData\Ressouce\data.json" />
   </ItemGroup>
 
 </Project>
