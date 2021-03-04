@@ -19,6 +19,14 @@ namespace GuideRestoGre.Data.Database
         #endregion
 
         /// <summary>
+        /// Constructor
+        /// </summary>
+        public RestaurantDbContext()
+        {
+            Database.EnsureCreated();
+        }
+
+        /// <summary>
         /// Configuration to create and/or access SQL database
         /// </summary>
         /// <param name="optionsBuilder"></param>
